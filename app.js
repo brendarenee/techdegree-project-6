@@ -28,7 +28,7 @@ const getRandomPhraseAsArray = arr => {
     phraseParsed.push(randPhrase[i]);
   }
   return phraseParsed;
-}
+};
 
 
 // Adds the random phrase to the Game Board
@@ -44,18 +44,26 @@ const addPhraseToDisplay = arr => {
       li.className = 'space';
     }
     phrase.firstElementChild.appendChild(li);
-  };
-}
+  }
+};
 
 addPhraseToDisplay ( getRandomPhraseAsArray(phrases) );
 
 const checkLetter = btn => {
   const letters = document.querySelectorAll('.letter');
-  for (i=0; i<letters.length; i++) {
-    if (btn === letters[i]) {
-      li.className = 'show';
-    } else {
-      return null;
+  let matchedLetter = null;
+  for (let i=0; i<letters.length; i++) {
+    if (btn === letters[i].textContent.toLowerCase()) {
+      letters[i].className +=  ' show';
     }
   }
-}
+};
+
+qwerty.addEventListener('click', (e) => {
+  const btn = e.target;
+  const btnContent = btn.textContent;
+  btn.className = 'chosen';
+  btn.setAttribute("disabled", "");
+
+  checkLetter(btnContent);
+});

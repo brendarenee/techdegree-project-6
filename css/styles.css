@@ -79,6 +79,7 @@ button {
 
 .letter {
   font-size: var(--font-size-medium);
+  font-family: 'Open Sans', sans-serif;
   height: 65px;
   width: 65px;
   padding: 20px 1px 0 1px;
