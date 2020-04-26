@@ -50,20 +50,24 @@ const addPhraseToDisplay = arr => {
 addPhraseToDisplay ( getRandomPhraseAsArray(phrases) );
 
 const checkLetter = btn => {
-  const letters = document.querySelectorAll('.letter');
-  let matchedLetter = null;
-  for (let i=0; i<letters.length; i++) {
-    if (btn === letters[i].textContent.toLowerCase()) {
-      letters[i].className +=  ' show';
+  const phrase = document.querySelectorAll('.letter');
+  let letterFound = null;
+  for (let i=0; i<phrase.length; i++) {
+    if (btn === phrase[i].textContent.toLowerCase()) {
+      phrase[i].className +=  ' show';
+      letterFound = phrase[i].textContent;
     }
   }
+  return (letterFound);
 };
 
 qwerty.addEventListener('click', (e) => {
-  const btn = e.target;
-  const btnContent = btn.textContent;
-  btn.className = 'chosen';
-  btn.setAttribute("disabled", "");
+  if (e.target.tagName = 'BUTTON') {
+    const selectedLetter = e.target;
+    selectedLetter.className = 'chosen';
+    selectedLetter.setAttribute("disabled", "");
+    const btnContent = selectedLetter.textContent;
 
-  checkLetter(btnContent);
+    checkLetter(btnContent);
+  }
 });
