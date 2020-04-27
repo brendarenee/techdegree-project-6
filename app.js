@@ -51,23 +51,29 @@ addPhraseToDisplay ( getRandomPhraseAsArray(phrases) );
 
 const checkLetter = btn => {
   const phrase = document.querySelectorAll('.letter');
-  let letterFound = null;
+  let phraseLetter = null;
   for (let i=0; i<phrase.length; i++) {
     if (btn === phrase[i].textContent.toLowerCase()) {
       phrase[i].className +=  ' show';
-      letterFound = phrase[i].textContent;
+      phraseLetter = phrase[i].textContent;
     }
   }
-  return (letterFound);
+  return phraseLetter;
 };
 
 qwerty.addEventListener('click', (e) => {
-  if (e.target.tagName = 'BUTTON') {
-    const selectedLetter = e.target;
-    selectedLetter.className = 'chosen';
-    selectedLetter.setAttribute("disabled", "");
-    const btnContent = selectedLetter.textContent;
+  if (e.target.tagName === 'BUTTON') {
+    const selectedButton = e.target;
+    selectedButton.className = 'chosen';
+    selectedButton.setAttribute("disabled", "");
+    const selectedLetter = selectedButton.textContent;
 
-    checkLetter(btnContent);
+    const letterFound = (checkLetter(selectedLetter));
+
+    if (!letterFound) {
+      missed += 1;
+      let heartCounter = document.querySelectorAll('.tries');
+      heartCounter[heartCounter.length - missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
+    }
   }
 });
