@@ -49,6 +49,7 @@ const addPhraseToDisplay = arr => {
 
 addPhraseToDisplay ( getRandomPhraseAsArray(phrases) );
 
+// Checks the button clicked against each letter in the phrase letters array
 const checkLetter = btn => {
   const phrase = document.querySelectorAll('.letter');
   let phraseLetter = null;
@@ -64,11 +65,13 @@ const checkLetter = btn => {
 function checkWin() {
   const phraseLetters = document.querySelectorAll('.letter');
   const guessedLetters = document.querySelectorAll('.show');
+// Checks if all phrase letters are 'showing' and shows the WIN screen
   if (phraseLetters.length === guessedLetters.length){
     overlay.className += ' win';
     overlay.style.display = 'flex';
     overlay.firstElementChild.textContent = 'You guessed the phrase!';
     buttonReset.textContent = 'Play Again';
+// Checks if user has 5 incorrect guesses and shows the LOSE screen
   } else if (missed > 4) {
     overlay.className += ' lose';
     overlay.style.display = 'flex';
@@ -96,26 +99,29 @@ function restartGame() {
 
 }
 
-
+// Keyboard button event listener.
 qwerty.addEventListener('click', (e) => {
   if (e.target.tagName === 'BUTTON') {
+    // Update keyboard to show 'chosen' letters
     const selectedButton = e.target;
     selectedButton.className = 'chosen';
     selectedButton.setAttribute("disabled", "");
     const selectedLetter = selectedButton.textContent;
-
+    // Checks if button clicked matches phrase.
+    // Letter revealed in phrase or NULL is returned.
     const letterFound = (checkLetter(selectedLetter));
-
+    // Update scoreboard when NULL is returned
     if (!letterFound) {
       missed += 1;
       let heartCounter = document.querySelectorAll('.tries');
       heartCounter[heartCounter.length - missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
     }
-
+    // Check for win/loss after each button click.
     checkWin();
   }
 });
 
+// Event listener for WIN/LOSE screen to reset game.
 buttonReset.addEventListener('click', (e) => {
   if (e.target.textContent === 'Play Again') {
     restartGame();
