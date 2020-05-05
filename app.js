@@ -8,17 +8,17 @@ buttonReset.addEventListener('click',
   (e) => {overlay.style.display = 'none';});
 
 const phrases = [
-  'All dressed up and nowhere to go',
+  'A return to the basics',
   'My patience is growing thin',
   'Quality time',
-  'Some day we will have a good laugh about this',
+  'Buying in bulk',
   'Go with the flow',
   'Going bananas',
-  'It is five oclock somewhere'
+  'One for the books'
 ];
 
 
-// Selects a random phrase and parse out each letter to a separate array.
+// Selects a random phrase and parses out each letter to a separate array.
 
 const getRandomPhraseAsArray = arr => {
   const randNum = Math.floor((Math.random() * arr.length));
@@ -61,6 +61,42 @@ const checkLetter = btn => {
   return phraseLetter;
 };
 
+function checkWin() {
+  const phraseLetters = document.querySelectorAll('.letter');
+  const guessedLetters = document.querySelectorAll('.show');
+  if (phraseLetters.length === guessedLetters.length){
+    overlay.className += ' win';
+    overlay.style.display = 'flex';
+    overlay.firstElementChild.textContent = 'You guessed the phrase!';
+    buttonReset.textContent = 'Play Again';
+  } else if (missed > 4) {
+    overlay.className += ' lose';
+    overlay.style.display = 'flex';
+    overlay.firstElementChild.textContent = 'You are out of guesses. Try again!';
+    buttonReset.textContent = 'Play Again';
+  }
+};
+
+function restartGame() {
+    const qwertyButtons = document.querySelectorAll('.chosen');
+    const scoreBoard = document.querySelectorAll('.tries');
+// Reset phrase section
+    phrase.firstElementChild.textContent = '';
+    addPhraseToDisplay ( getRandomPhraseAsArray(phrases) );
+// Reset qwerty keyboard
+    for (i=0; i<qwertyButtons.length; i++) {
+      qwertyButtons[i].removeAttribute('disabled');
+      qwertyButtons[i].className = '';
+    };
+// Reset scoreboard
+    missed = 0;
+    for (i=0; i<scoreBoard.length; i++) {
+      scoreBoard[i].innerHTML = '<img src="images/liveHeart.png" width="30px" height="35px">';
+    };
+
+}
+
+
 qwerty.addEventListener('click', (e) => {
   if (e.target.tagName === 'BUTTON') {
     const selectedButton = e.target;
@@ -75,5 +111,20 @@ qwerty.addEventListener('click', (e) => {
       let heartCounter = document.querySelectorAll('.tries');
       heartCounter[heartCounter.length - missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
     }
+
+    checkWin();
   }
 });
+
+buttonReset.addEventListener('click', (e) => {
+  if (e.target.textContent === 'Play Again') {
+    restartGame();
+    overlay.style.display = 'none';
+  }
+  });
+
+
+
+
+// qwerty.addEventListener('click', (e) => {
+//   if (e.target.tagName === 'BUTTON') {
