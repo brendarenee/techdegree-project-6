@@ -60,7 +60,7 @@ const addPhraseToDisplay = arr => {
       phraseList.appendChild(document.createElement('UL'));
     }
   }
-}
+};
 
 addPhraseToDisplay ( getRandomPhraseAsArray(phrases) );
 
@@ -82,18 +82,18 @@ function checkWin() {
   const guessedLetters = document.querySelectorAll('.show');
 // Checks if all phrase letters are 'showing' and shows the WIN screen
   if (phraseLetters.length === guessedLetters.length){
-    overlay.className += ' win';
+    overlay.className = 'win';
     overlay.style.display = 'flex';
     overlay.firstElementChild.textContent = 'You guessed the phrase!';
     buttonReset.textContent = 'Play Again';
 // Checks if user has 5 incorrect guesses and shows the LOSE screen
   } else if (missed > 4) {
-    overlay.className += ' lose';
+    overlay.className = 'lose';
     overlay.style.display = 'flex';
-    overlay.firstElementChild.textContent = 'You are out of guesses. Try again!';
+    overlay.firstElementChild.textContent = 'You are out of guesses';
     buttonReset.textContent = 'Play Again';
   }
-};
+}
 
 function restartGame() {
     const qwertyButtons = document.querySelectorAll('.chosen');
@@ -105,12 +105,12 @@ function restartGame() {
     for (i=0; i<qwertyButtons.length; i++) {
       qwertyButtons[i].removeAttribute('disabled');
       qwertyButtons[i].className = '';
-    };
+    }
 // Reset scoreboard
     missed = 0;
     for (i=0; i<scoreBoard.length; i++) {
       scoreBoard[i].innerHTML = '<img src="images/liveHeart.png" width="30px" height="35px">';
-    };
+    }
 
 }
 
