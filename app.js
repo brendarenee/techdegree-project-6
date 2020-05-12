@@ -1,5 +1,6 @@
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
+const phraseList = document.getElementById('phraseList');
 const overlay = document.getElementById('overlay');
 const buttonReset = document.querySelector('.btn__reset');
 let missed = 0;
@@ -35,17 +36,31 @@ const getRandomPhraseAsArray = arr => {
 
 const addPhraseToDisplay = arr => {
   for (let i=0; i<arr.length; i++) {
+    // Create <li></li> element.
     let li = document.createElement('li');
+    let ul = document.createElement('ul');
+    // Add each letter/space in the phrase array to an li element
     li.textContent = arr[i];
+    // Create regular expression that recognizes letters only
     let liRe = new RegExp('[a-zA-Z]');
-    if (liRe.test(li.textContent)) {
+    // If it matches, add class of 'letter'. If not, class is 'space'. Enclose each word in it's own UL element.
+    if (liRe.test(li.textContent) && (phraseList.childElementCount === 0)) {
       li.className = 'letter';
-    } else {
-      li.className = 'space';
+      ul.appendChild(li);
+      phraseList.appendChild(ul);
+    } else if (liRe.test(li.textContent) && (phraseList.childElementCount !== 0)) {
+      li.className = 'letter';
+      let lastWord = phraseList.lastElementChild;
+      lastWord.appendChild(li);
     }
-    phrase.firstElementChild.appendChild(li);
+    else {
+      li.className = 'space';
+      let lastWord = phraseList.lastElementChild;
+      lastWord.appendChild(li);
+      phraseList.appendChild(document.createElement('UL'));
+    }
   }
-};
+}
 
 addPhraseToDisplay ( getRandomPhraseAsArray(phrases) );
 
